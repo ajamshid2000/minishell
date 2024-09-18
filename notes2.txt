@@ -1,0 +1,52 @@
+probleme double minishell apres ctrl c bloque.
+besoin du PID des processus
+
+void	handle_sigint(int sig)
+{
+    (void)sig;
+    printf("\n");
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+    // If a child process is running, send SIGINT to it
+    if (g_pid > 0) { // Assuming g_pid is the child process ID
+        kill(g_pid, SIGINT);
+    }
+}
+------
+probleme file non existant pour echo marche pour les autres functions non built in
+
+ echo  < not_file
+Command 0: echo
+Command 1: <
+Command 2: not_file
+Command 0:
+  Arg 0: echo
+  Input Redirection: not_file
+
+
+echo < not_file
+zsh: no such file or directory: not_file
+
+----
+pas l'air de marcher comme prevu
+
+exit(status)
+
+-----fixed heredoc
+
+---leak fixed
+
+remplacer malloc par calloc ?
+
+set status if error
+
+
+./minishell
+space
+segfault
+
+weqeqweq
+zsh: command not found: weqeqweq
+
+minishell: No such file or directory: efqwfwwqfqw
