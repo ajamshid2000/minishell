@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 19:08:54 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/18 18:01:21 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/09/19 00:01:12 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,19 @@
 
 int	print_second_error(char *name)
 {
-	if (!access(name, F_OK) && access(name, X_OK) != 0)
+	if (!access(name, F_OK) && access(name, X_OK) != 0 && ft_strchr(name, '/') != 0)
 	{
-		ft_putstr_fd("permission denied: ", 2);
-		ft_putendl_fd(name, 2);
+		ft_putendl_fd("Permission denied", 2);
 		return (126);
 	}
 	if (ft_strchr(name, '/') == 0)
 	{
-		ft_putstr_fd("command not found: ", 2);
-		ft_putendl_fd(name, 2);
+		ft_putendl_fd("command not found", 2);
 		return (127);
 	}
 	if (access(name, F_OK) != 0)
 	{
-		ft_putstr_fd(" mine No such file or directory: ", 2);
-		ft_putendl_fd(name, 2);
+		ft_putendl_fd("No such file or directory", 2);
 		return (127);
 	}
 	return (0);
@@ -46,8 +43,7 @@ int	print_error_execve(char *name)
 	i = print_second_error(name);
 	if (!i && folder != 0)
 	{
-		ft_putstr_fd("permission denied: ", 2);
-		ft_putendl_fd(name, 2);
+		ft_putendl_fd("Is a directory", 2);
 		return (126);
 	}
 	if (!i)
@@ -88,7 +84,7 @@ void	print_error_write(char *name)
 	int	fd;
 
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(name, 2);
+	// ft_putstr_fd(name, 2);
 	if (access(name, R_OK) == -1)
 	{
 		perror("");

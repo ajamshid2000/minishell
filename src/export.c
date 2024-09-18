@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:18:05 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/08/27 13:33:54 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:16:49 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	print_export(char **str, int out_fd)
 	i = 0;
 	while (i < n)
 	{
-		ft_putstr_fd(str[i], out_fd);
-		ft_putstr_fd("\n", out_fd);
+		// ft_putstr_fd(str[i], out_fd);
+		// ft_putstr_fd("\n", out_fd);
+		(void)out_fd;
 		i++;
 	}
 	free_table(str);

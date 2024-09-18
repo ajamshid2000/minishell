@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 17:51:13 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/18 18:03:33 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/09/19 00:14:00 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,22 @@ int	out_and_append(t_fcommand *command, int read_end, int write_end)
 	while (command->redirections && command->redirections->out
 		&& command->redirections->out[i])
 	{
-		printf("%s\n", command->redirections->out[i]);
+		// printf("%s\n", command->redirections->out[i]);
 		temp = open(command->redirections->out[i], O_CREAT | O_RDWR | O_TRUNC,
 				S_IRUSR | S_IWUSR);
 		if (temp < 0)
 		{
+			// printf("here\n");
 			print_error_write(command->redirections->out[i]);
+			// printf("here\n");
 			return (1);
 		}
 		// ft_putstr_fd(str, temp);
 		close(temp);
 		i++;
 	}
-	append(command, str);
+	if (append(command, str) == 1)
+		return (1);
 	// if (write_end != 1)
 	// 	ft_putstr_fd(str, write_end);
 	// free(str);

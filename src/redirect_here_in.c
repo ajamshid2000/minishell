@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_here_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 18:15:49 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/18 14:04:09 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:38:44 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ int	set_fd(t_fcommand *command, int write_end)
 		close(temp);
 		i++;
 	}
-	if (command->redirections && command->redirections->here
-		&& command->redirections->here[0])
-		ft_putstr_fd(command->redirections->here, write_end);
+	(void)write_end;
+	// if (command->redirections && command->redirections->here
+	// 	&& command->redirections->here[0])
+	// 	ft_putstr_fd(command->redirections->here, write_end);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:34:29 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/18 17:27:08 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/09/19 00:11:42 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	cd_pwd(t_env *env, t_commands *commands, int i, int out_fd)
 	ft_bzero(buffer, sizeof(buffer));
 	if (!ft_strcmp(commands->fcommand[i]->command[0], "pwd"))
 	{
-		if (commands->fcommand[i]->command[1])
-		{
-			ft_putstr_fd("minishell: pwd : too many arguments\n", 2);
-			commands->status = 1;
-			return (1);
-		}
+		// if (commands->fcommand[i]->command[1])
+		// {
+		// 	ft_putstr_fd("minishell: pwd : too many arguments\n", 2);
+		// 	commands->status = 1;
+		// 	return (1);
+		// }
 		getcwd(buffer, sizeof(buffer));
 		if (buffer[0])
 			print_pwd(buffer, out_fd, commands);
@@ -111,7 +111,7 @@ char	**child_proccess(t_commands *commands, int i, int in_fd, int out_fd)
 			close(in_fd);
 	}
 	if (commands->fcommand[i]->redirections
-		&& commands->fcommand[i]->redirections->last_out != 0)
+		&& commands->fcommand[i]->redirections->last_out != 0 )
 	{
 		if (commands->fcommand[i]->redirections->last_out == 1)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:24:10 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/08/20 19:23:36 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/09/18 20:32:09 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	print_n(char **command, int out_fd, t_commands *commands)
 	i = 0;
 	while (command[i])
 	{
+		if (i > 1)
+			ft_putstr_fd(" ", out_fd);
 		if (!ft_strcmp(command[i], "$?"))
 			ft_putstr_fd(ft_itoa(commands->status), out_fd);
 		else if (ft_strcmp(command[i], "-n"))
@@ -59,14 +61,17 @@ int	print(char **command, int out_fd, t_commands *commands)
 		ft_putstr_fd("\n", out_fd);
 	while (command[i])
 	{
+		if (i != 0)
+			ft_putstr_fd(" ", out_fd);
 		if (!ft_strcmp(command[i], "$?"))
 			temp = ft_strjoin(ft_itoa(commands->status), "\n");
 		else
-			temp = ft_strjoin(command[i], "\n");
+			temp = ft_strdup(command[i]);
 		ft_putstr_fd(temp, out_fd);
 		free(temp);
 		i++;
 	}
+	ft_putstr_fd("\n", out_fd);
 	return (0);
 }
 
@@ -77,12 +82,8 @@ int	echo(char **command, int out_fd, t_commands *commands)
 
 	i = 0;
 	j = 0;
-	while (command[i])
-	{
-		if (!ft_strcmp(command[i], "-n"))
-			j = 1;
-		i++;
-	}
+	if (!ft_strcmp(command[i], "-n"))
+		j = 1;
 	if (j == 1)
 		print_n(command, out_fd, commands);
 	if (j != 1)
