@@ -6,7 +6,7 @@
 /*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/14 09:38:50 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/16 08:39:47 by famana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,14 @@ void	process_split_logic(t_split_context *ctx)
 
 void	fill_result(char *s, char c, char **result)
 {
-	t_split_context	ctx;
+	t_split_context		ctx;
 
 	ctx.s = s;
 	ctx.c = c;
 	ctx.result = result;
-	ctx.num_split = (int *)malloc(sizeof(int));
+	ctx.num_split = (int *)ft_calloc(1, sizeof(int));
 	if (ctx.num_split == NULL)
 		return ;
-	*ctx.num_split = 0;
 	ctx.i = -1;
 	ctx.count = 0;
 	ctx.start = 0;
@@ -80,10 +79,9 @@ char	**custom_ft_split(char *s, char c)
 	if (s == 0)
 		return (0);
 	num_split = ft_count_split(s, c);
-	result = malloc((num_split + 1) * sizeof(char *));
+	result = ft_calloc((num_split + 1), sizeof(char *));
 	if (result == 0)
 		return (0);
 	fill_result(s, c, result);
-	result[num_split] = 0;
 	return (result);
 }

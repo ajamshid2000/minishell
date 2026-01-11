@@ -6,7 +6,7 @@
 /*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/10/01 07:16:19 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/16 07:58:02 by famana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_commands	*handle_normal_command(t_commands *commands, int id_cmd,
 
 /* Handle redirection commands */
 t_commands	*process_redirection_commands(t_commands *commands,
-		char **splited_command, int *i, int id_cmd)
+		char ***splited_command, int *i, int id_cmd)
 {
 	commands = handle_redirections(commands, splited_command, i, id_cmd);
 	if (commands == NULL)

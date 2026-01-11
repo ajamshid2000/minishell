@@ -6,7 +6,7 @@
 /*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:23:29 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/10/08 18:22:28 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:18:39 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,18 @@ int	free_table(char **env)
 int	free_env_stack(t_env *env)
 {
 	t_env	*temp;
-	int		i;
 
 	while (env->next->next)
 	{
 		temp = env->next;
-		i = 0;
-		while (env->env[i])
-			free(env->env[i++]);
+		free(env->env[0]);
+		free(env->env[1]);
 		free(env->env);
 		free(env);
 		env = temp;
 	}
-	i = 0;
-	while (env->env[i])
-		free(env->env[i++]);
+	free(env->env[0]);
+	free(env->env[1]);
 	free(env->env);
 	free(env->next);
 	free(env);
@@ -55,6 +52,16 @@ int	free_pipe(t_commands *commands)
 {
 	int	i;
 
+	i = 0;
+	while (commands->fcommand[i])
+	{
+		if (commands->fcommand[i]->redirections
+			&& commands->fcommand[i]->redirections->here_fd)
+		{
+			close(commands->fcommand[i]->redirections->here_fd);
+		}
+		i++;
+	}
 	i = 0;
 	while (i <= commands->pipe_count + 1)
 	{
@@ -107,7 +114,6 @@ int	free_all(t_commands *commands, char **environ)
 			i++;
 		}
 		free(commands->fcommand);
-		free(commands->child_pid);
 		free(commands);
 	}
 	rl_clear_history();

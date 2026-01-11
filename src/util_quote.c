@@ -6,7 +6,7 @@
 /*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/20 10:31:52 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/16 10:26:52 by famana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,33 @@ int	is_quote_escaped(char *string, size_t i)
 {
 	return ((is_in_quote_simple(string, i) == 1 || is_in_double_quote(string,
 				i) == 1 || is_escaped(string, i) == 1));
+}
+
+/* Function to check for unclosed quotes in a string */
+int	has_unclosed_quotes(const char *string)
+{
+	int		in_single_quote;
+	int		in_double_quote;
+	size_t	i;
+
+	in_single_quote = 0;
+	in_double_quote = 0;
+	i = 0;
+	if (string == NULL)
+		return (0);
+	while (string[i] != '\0')
+	{
+		if (!is_escaped((char *)string, i))
+		{
+			if (string[i] == '\'' && !in_double_quote)
+				in_single_quote = !in_single_quote;
+			else if (string[i] == '\"' && !in_single_quote)
+				in_double_quote = !in_double_quote;
+		}
+		i++;
+	}
+	if (in_single_quote || in_double_quote)
+		return (1);
+	else
+		return (0);
 }

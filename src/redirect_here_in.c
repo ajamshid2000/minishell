@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_here_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 18:15:49 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/10/01 07:17:09 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/17 17:01:11 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	redirect_in(t_commands *commands, int i, int in_fd)
 
 	if (commands->fcommand[i]->redirections->last_in == 1)
 	{
-		ft_putstr_fd(commands->fcommand[i]->redirections->here,
-			commands->pipe_fd[i][1]);
-		dup2(in_fd, 0);
+		dup2(commands->fcommand[i]->redirections->here_fd, 0);
+		close(commands->fcommand[i]->redirections->here_fd);
 		if (in_fd)
 			close(in_fd);
 	}

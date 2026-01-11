@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:13:59 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/08/27 15:14:00 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/17 16:01:58 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-//changes
+// changes
 t_env	*locate_env(t_env *env, char *keyword)
 {
 	t_env	*temp;
@@ -29,19 +29,19 @@ t_env	*locate_env(t_env *env, char *keyword)
 	return (0);
 }
 /*parsing different
-t_env *locate_env(t_env *env, char *keyword) {
-    t_env   *temp;
+t_env	*locate_env(t_env *env, char *keyword) {
+	t_env   *temp;
 
-    temp = env;
-    while (temp) {
-        if (!ft_strncmp(temp->env[0], keyword, ft_strlen(keyword))) {
-            if (temp->env[0][ft_strlen(keyword)] == '\0') {
-                return temp;
-            }
-        }
-        temp = temp->next;
-    }
-    return NULL;
+	temp = env;
+	while (temp) {
+		if (!ft_strncmp(temp->env[0], keyword, ft_strlen(keyword))) {
+			if (temp->env[0][ft_strlen(keyword)] == '\0') {
+				return (temp);
+			}
+		}
+		temp = temp->next;
+	}
+	return (NULL);
 }*/
 
 int	env_add_last(t_env *env, char *name, char *value)
@@ -51,7 +51,11 @@ int	env_add_last(t_env *env, char *name, char *value)
 	int		i;
 
 	new = (t_env *)malloc(sizeof(t_env));
+	if (!new)
+		return (0);
 	new->env = (char **)malloc(3 * sizeof(char *));
+	if (!new->env)
+		return (0);
 	temp = env;
 	i = 0;
 	while (temp->next->next->next)

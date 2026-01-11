@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 00:02:24 by abdul-rashe       #+#    #+#             */
-/*   Updated: 2024/09/19 22:15:00 by abdul-rashe      ###   ########.fr       */
+/*   Updated: 2024/10/17 17:54:02 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,25 @@
 int	ft_isnumeric(char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (str[i])
+	if (str[i])
 	{
 		if (i == 0)
 		{
-			while (str[i++] == ' ')
-				if (str[i] == '+' || str[i] == '-')
-					i++;
-			j = i;
+			while (str[i] == ' ')
+				i++;
+			if (str[i] == '+' || str[i] == '-')
+				i++;
 		}
 		if (!ft_isdigit(str[i]))
 			return (1);
-		i++;
 	}
-	if (j == 0 || str[j - 1] == '+' || str[j - 1] == ' ')
-		if (ft_strcmp(&str[j], "9223372036854775807") > 0)
+	if (i > 0 && (str[i - 1] == '+' || str[i - 1] == ' '))
+		if (ft_strcmp(&str[i], "9223372036854775807") > 0)
 			return (1);
-	if (str[j - 1] == '-')
-		if (ft_strcmp(&str[j], "9223372036854775808") > 0)
+	if (i > 0 && str[i - 1] == '-')
+		if (ft_strcmp(&str[i], "9223372036854775808") > 0)
 			return (1);
 	return (0);
 }
@@ -68,10 +66,11 @@ long long int	ft_atoi_long(char *nptr)
 
 void	exit_error(t_commands *commands, int i)
 {
+	ft_putendl_fd("Exit", 2);
 	if (i == 0)
 	{
 		ft_putstr_fd("minishell: Exit: ", 2);
-		ft_putendl_fd(": too many arguments", 2);
+		ft_putendl_fd("too many arguments", 2);
 	}
 	if (i == 1)
 	{
@@ -96,12 +95,11 @@ int	exit_minishell(t_commands *commands, int i)
 		{
 			exit_error(commands, 1);
 			commands->status = 2;
-			if (commands->fcommand[i - 1]->command[2])
-				return (1);
-			return (0);
+			return (1);
 		}
 		commands->status = (ft_atoi_long(commands->fcommand[i - 1]->command[1])
 				% 256);
+		ft_putendl_fd("Exit", 2);
 		return (1);
 	}
 	commands->status = 0;

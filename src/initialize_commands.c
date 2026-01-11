@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_commands.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/30 09:11:23 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/16 16:53:37 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_commands	*initialize_redirections(t_commands *commands, int id_cmd)
 		commands->fcommand[id_cmd]->redirections->append = NULL;
 		commands->fcommand[id_cmd]->redirections->in = NULL;
 		commands->fcommand[id_cmd]->redirections->here = NULL;
+		commands->fcommand[id_cmd]->redirections->here_fd = 0;
 		commands->fcommand[id_cmd]->redirections->last_in = 0;
 		commands->fcommand[id_cmd]->redirections->last_out = 0;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variable_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/10/01 07:13:59 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/17 20:06:57 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ const char	*extract_variable_name(const char **src, size_t *var_len)
 		}
 		var_start = *src;
 		*var_len = 0;
-		while (**src && (isalnum((unsigned char)**src) || **src == '_'))
+		while (**src && ft_isalnum(**src))
 		{
 			(*src)++;
 			(*var_len)++;

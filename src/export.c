@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:18:05 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/20 00:00:19 by abdul-rashe      ###   ########.fr       */
+/*   Updated: 2024/10/17 18:09:54 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	print_export(char **str, int out_fd)
 	i = 0;
 	while (i < n)
 	{
-		(void)out_fd;
+		ft_putstr_fd("declare -x ", out_fd);
+		ft_putendl_fd(str[i], out_fd);
 		i++;
 	}
 	free_table(str);
@@ -69,7 +70,7 @@ int	create_array2(t_env *temp, char **enva, int i)
 		if (temp->env[1])
 			enva[i] = ft_strjoin(temps, temp->env[1]);
 		else
-			enva[i] = ft_strjoin(temps, "''");
+			enva[i] = ft_strjoin(temp->env[0], " ");
 		free(temps);
 		return (0);
 	}

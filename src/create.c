@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:25:52 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/20 11:38:25 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/17 16:03:21 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 t_env	*create_env_stack(void)
 {
-	t_env			*env;
-	t_env			*temp;
-	int				i;
-	extern char		**environ;
+	t_env		*env;
+	t_env		*temp;
+	int			i;
+	extern char	**environ;
 
 	env = (t_env *)malloc(sizeof(t_env));
 	if (env == NULL)
@@ -29,6 +29,11 @@ t_env	*create_env_stack(void)
 	{
 		temp->env = ft_split_one(environ[i], '=');
 		temp->next = (t_env *)malloc(sizeof(t_env));
+		if (!temp->next)
+		{
+			free_env(env);
+			return (NULL);
+		}
 		temp = temp->next;
 		i++;
 	}
@@ -65,6 +70,8 @@ char	**create_env_array(t_env *env)
 		i++;
 	}
 	enva = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!enva)
+		return (NULL);
 	i = 0;
 	temp = env;
 	while (temp->next)

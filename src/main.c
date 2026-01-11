@@ -3,52 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 07:27:49 by famana            #+#    #+#             */
-/*   Updated: 2024/09/16 00:15:17 by abdul-rashe      ###   ########.fr       */
+/*   Updated: 2024/10/17 16:55:30 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-/* Function to process the input and handle history*/
-int	process_input(char *input, t_env *env, int *status)
-{
-	int	exit_flag;
-
-	exit_flag = 0;
-	if (*input)
-	{
-		add_history(input);
-		exit_flag = eval2(input, env, status);
-	}
-	return (exit_flag);
-}
+volatile sig_atomic_t	g_signal_received = 0;
 
 int	main(void)
 {
-	char	*input;
-	int		exit_flag;
 	t_env	*env;
 	int		status;
+	int		exit_flag;
+	char	*input;
 
-	status = 0;
 	env = create_env_stack();
+	status = 0;
 	exit_flag = 0;
-	setup_signal_handlers();
+	rl_event_hook = my_event_hook;
 	while (1)
 	{
-		g_ctrl_c_status = 0;
+		initialize_iteration();
 		input = readline("minishell> ");
+		if (handle_signal_and_input(&input, &status))
+			continue ;
 		if (input == NULL)
 			break ;
-		exit_flag = process_input(input, env, &status);
+		exit_flag = process_user_command(input, env, &status);
 		if (exit_flag == 1)
 			break ;
 	}
-	free_env_stack(env);
-	rl_clear_history();
+	if (exit_flag != 1)
+		ft_putendl_fd("Exit", 2);
+	final_cleanup(env);
 	return (status);
 }

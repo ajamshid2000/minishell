@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:34:29 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/10/08 18:30:12 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:04:25 by famana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	cd_pwd(t_env *env, t_commands *commands, int i, int out_fd)
 int	execute_builtin(t_env *env, t_commands *commands, int i, int out_fd)
 {
 	if (!commands->fcommand[i]->command || !commands->fcommand[i]->command[0])
-		return (echo_here(commands->fcommand[i]->redirections->here, commands));
+		return (0);
 	if (cd_pwd(env, commands, i, out_fd))
 		return (1);
 	if (!ft_strcmp(commands->fcommand[i]->command[0], "env"))
@@ -80,11 +80,6 @@ char	**child_proccess(t_commands *commands, int i, int in_fd, int out_fd)
 
 	environ = create_env_array(commands->env);
 	redirect_commands(commands, i, in_fd, out_fd);
-	// if (commands->fcommand[i + 1] && (!is_builtin(commands->fcommand[i
-	// 			+ 1]->command) && commands->pipe_count == i + 1))
-	// {
-	// 	close(commands->pipe_fd[i + 1][0]);
-	// }
 	free_pipe(commands);
 	if (!is_builtin(commands->fcommand[i]->command))
 	{
@@ -99,20 +94,6 @@ char	**child_proccess(t_commands *commands, int i, int in_fd, int out_fd)
 	return ((char **)environ);
 }
 
-int	add_to_child_pid(int pid, t_commands *commands)
-{
-	int	i;
-
-	i = 0;
-	while (commands->child_pid[i])
-	{
-		i++;
-	}
-	commands->child_pid[i] = pid;
-	commands->child_pid[i + 1] = 0;
-	return (0);
-}
-
 void	execute_command(t_commands *commands, int i, int in_fd, int out_fd)
 {
 	pid_t	pid;
@@ -124,10 +105,6 @@ void	execute_command(t_commands *commands, int i, int in_fd, int out_fd)
 	{
 		perror("minishell: fork");
 		exit(0);
-	}
-	else if (pid != 0)
-	{
-		add_to_child_pid(pid, commands);
 	}
 	else if (pid == 0)
 	{

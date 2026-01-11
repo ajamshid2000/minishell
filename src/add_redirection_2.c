@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_redirection_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/10/01 07:12:38 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/16 16:53:55 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	ensure_redirections_initialized(t_commands *commands, int id_cmd)
 		commands->fcommand[id_cmd]->redirections->append = NULL;
 		commands->fcommand[id_cmd]->redirections->in = NULL;
 		commands->fcommand[id_cmd]->redirections->here = NULL;
+		commands->fcommand[id_cmd]->redirections->here_fd = 0;
 		commands->fcommand[id_cmd]->redirections->last_in = 0;
 		commands->fcommand[id_cmd]->redirections->last_out = 0;
 	}

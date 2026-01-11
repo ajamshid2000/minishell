@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/30 13:08:13 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:06:21 by famana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 char	*reallocate_content(char *content, size_t *capacity, size_t new_size)
 {
 	char	*new_content;
+	size_t	old_size;
 
 	if (new_size >= *capacity)
 	{
+		old_size = *capacity;
 		*capacity *= 2;
-		new_content = realloc(content, *capacity);
+		new_content = my_realloc(content, *capacity, old_size);
 		if (!new_content)
 		{
 			free(content);
@@ -58,47 +60,12 @@ int	process_line(char **content, size_t *content_size, size_t *content_capacity,
 	return (1);
 }
 
-int	handle_line_input(char **content, size_t *content_size,
-		size_t *content_capacity, const char *stop_word)
+// Main function to handle heredoc and return content + execution flag
+char	*handle_heredoc2(const char *stop_word, int *exec_flag, int *here_fd)
 {
-	char	*line;
+	char	*heredoc_content;
 
-	line = read_input_line();
-	while (line != NULL)
-	{
-		if (is_stop_word(line, stop_word))
-		{
-			free(line);
-			break ;
-		}
-		if (!process_line(content, content_size, content_capacity, line))
-		{
-			free(line);
-			return (0);
-		}
-		free(line);
-		line = read_input_line();
-	}
-	return (1);
-}
-
-char	*handle_heredoc(const char *stop_word)
-{
-	size_t	content_size;
-	size_t	content_capacity;
-	char	*content;
-
-	content_size = 0;
-	content_capacity = 1024;
-	content = allocate_memory(&content_capacity);
-	if (!content)
-	{
-		return (NULL);
-	}
-	if (!handle_line_input(&content, &content_size, &content_capacity,
-			stop_word))
-	{
-		return (NULL);
-	}
-	return (content);
+	heredoc_content = NULL;
+	execute_heredoc((char *)stop_word, &heredoc_content, exec_flag, here_fd);
+	return (heredoc_content);
 }

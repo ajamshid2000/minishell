@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famana <famana@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:19:39 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/27 10:36:27 by famana           ###   ########.fr       */
+/*   Updated: 2024/10/08 23:35:16 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*process_command_argument(char *cmd_arg)
 	cmd_to_add = remove_quotes(cmd_arg);
 	if (!cmd_to_add)
 	{
-		printf("Mem allocation failed while processing command argument '%s'.\n",
+		printf("Mem allocation failed while processing command arg '%s'.\n",
 			cmd_arg);
 	}
 	return (cmd_to_add);

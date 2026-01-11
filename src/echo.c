@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:24:10 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/30 13:06:33 by ajamshid         ###   ########.fr       */
+/*   Updated: 2024/10/09 00:28:10 by abdul-rashe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,27 @@ size_t	ft_strcpy(char *dst, const char *src)
 int	print_n(char **command, int out_fd, t_commands *commands)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	while (command[i] && !ft_strncmp(command[i], "-n", 2))
+	{
+		j = 1;
+		while (command[i][j] == 'n')
+			j++;
+		if (!command[i][j])
+			i++;
+		else
+			break ;
+	}
 	while (command[i])
 	{
-		if (i > 1)
-			ft_putstr_fd(" ", out_fd);
 		if (!ft_strcmp(command[i], "$?"))
 			ft_putstr_fd(ft_itoa(commands->status), out_fd);
-		else if (ft_strcmp(command[i], "-n"))
-			ft_putstr_fd(command[i], out_fd);
+		ft_putstr_fd(command[i], out_fd);
 		i++;
+		if (command[i])
+			ft_putstr_fd(" ", out_fd);
 	}
 	return (0);
 }
@@ -87,8 +97,13 @@ int	echo(char **command, int out_fd, t_commands *commands)
 		write(1, "\n", 1);
 		return (0);
 	}
-	if (!ft_strcmp(command[i], "-n"))
+	if (!ft_strncmp(command[i], "-n", 2))
 		j = 1;
+	if (j == 1)
+		while (command[0][i + 1] && command[0][i + 1] == 'n')
+			i++;
+	if (command[0][i] != 'n' || command[0][i + 1])
+		j = 0;
 	if (j == 1)
 		print_n(command, out_fd, commands);
 	if (j != 1)

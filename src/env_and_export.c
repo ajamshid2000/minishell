@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   env_and_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdul-rashed <abdul-rashed@student.42.f    +#+  +:+       +#+        */
+/*   By: ajamshid <ajamshid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:10:29 by ajamshid          #+#    #+#             */
-/*   Updated: 2024/09/19 23:58:44 by abdul-rashe      ###   ########.fr       */
+/*   Updated: 2024/10/10 13:40:57 by ajamshid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+int	is_space_in_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isspace(str[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	export_multiple(t_env *env, t_commands *commands, int i, int out_fd)
 {
@@ -24,6 +38,8 @@ int	export_multiple(t_env *env, t_commands *commands, int i, int out_fd)
 		name_value = ft_split_one(commands->fcommand[i]->command[j], '=');
 		commands->status = export_one(env, name_value[0], name_value[1],
 				out_fd);
+		if (name_value)
+			free_table(name_value);
 		j++;
 	}
 	if (!commands->fcommand[i]->command[1])
@@ -70,7 +86,22 @@ char	*find_value_of_env2(t_env *env, char *name)
 
 int	check_name(char *name)
 {
-	if (!name || !name[0] || ft_strchr(name, '-') || ft_isdigit(name[0]))
+	if (!name)
+		return (0);
+	if (!name[0])
+	{
+		ft_putstr_fd("export:", 2);
+		ft_putendl_fd(" not valid in this context: ", 2);
+		return (1);
+	}
+	if (is_space_in_str(name))
+	{
+		ft_putstr_fd("export:", 2);
+		ft_putstr_fd(" not valid in this context: ", 2);
+		ft_putendl_fd(name, 2);
+		return (1);
+	}
+	if (ft_strchr(name, '-') || ft_isdigit(name[0]))
 	{
 		ft_putstr_fd("minishell:", 2);
 		ft_putendl_fd(" not a valid identifier", 2);
